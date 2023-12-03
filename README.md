@@ -1,5 +1,5 @@
 # kevin
-IA/AI.
+IA para utilizar no terminal e também no Discord.
 # Passos 
 
 ## Dependências
