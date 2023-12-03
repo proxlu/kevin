@@ -37,3 +37,5 @@ IA/AI.
 2. Navegue até o diretório em que você instalou o kevin
 
 3. Execute `python3 kevin.py` ou `./kevin.py` para iniciar o bot
+
+![image](https://github.com/proxlu/kevin/assets/105125779/953dc419-1e02-45d1-936f-e3f8575b82dd)
