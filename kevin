@@ -10,6 +10,8 @@ from bardapi import Bard
 
 # Token do BARD
 token = "SEU_TOKEN_AQUI" # Veja o segundo passo do README.md para obter esse Token.
+
+# Estrutura principal
 if arg:
   session = requests.Session()
   session.headers = SESSION_HEADERS
