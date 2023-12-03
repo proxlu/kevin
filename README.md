@@ -30,6 +30,10 @@ IA/AI.
 2. Tecle F12
 3. Navegue por: Applicativo → Cookies → copie o valor de `__Secure-1PSID`.
 
+4. cole o token no `config.ini` após `discord_token =`
+
+![bard_api](https://github.com/proxlu/kevin/assets/105125779/6e6f18cc-b5f1-44a1-a570-0d981eb4a3c1)
+
 ## Passo 3: Executar o bot
 
 1. Abra o terminal
@@ -37,8 +41,3 @@ IA/AI.
 2. Navegue até o diretório em que você instalou o kevin
 
 3. Execute `python3 kevin.py` ou `./kevin.py` para iniciar o bot
-
-4. cole o token no `config.ini` após `discord_token =`
-
-![bard_api](https://github.com/proxlu/kevin/assets/105125779/6e6f18cc-b5f1-44a1-a570-0d981eb4a3c1)
-
