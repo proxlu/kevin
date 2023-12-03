@@ -8,15 +8,17 @@ import requests
 from bardapi.constants import SESSION_HEADERS
 from bardapi import Bard
 
+# Token do BARD
 token = "SEU_TOKEN_AQUI" # Veja o segundo passo do README.md para obter esse Token.
+if arg:
+  session = requests.Session()
+  session.headers = SESSION_HEADERS
+  session.cookies.set("__Secure-1PSID", token)
+  session.cookies.set("__Secure-1PSIDTS", "<VALUE>")
+  session.cookies.set("__Secure-1PSIDCC", "<VALUE>")
 
-session = requests.Session()
-session.headers = SESSION_HEADERS
-session.cookies.set("__Secure-1PSID", token)
-session.cookies.set("__Secure-1PSIDTS", "<VALUE>")
-session.cookies.set("__Secure-1PSIDCC", "<VALUE>")
+  bard = Bard(token=token, session=session)
 
-
-bard = Bard(token=token, session=session)
-
-print(bard.get_answer(arg)['content'])
+  print(bard.get_answer(arg)['content'])
+else
+  print('Olá, Sou uma IA de linha de comando e estou aqui para lhe ajudar, como posso lhe ajudar? Qualquer dúvida basta digitar: kevin A_SUA_PERGUNTA')
