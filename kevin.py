@@ -1,5 +1,5 @@
 #!/bin/python3
-# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*- 
 from bardapi.constants import SESSION_HEADERS
 from bardapi import Bard
 import requests
