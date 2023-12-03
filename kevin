@@ -1,0 +1,22 @@
+#!/bin/python3
+import sys
+
+# Pega toda entrada
+arg = ' '.join(sys.argv[1:])
+
+import requests
+from bardapi.constants import SESSION_HEADERS
+from bardapi import Bard
+
+token = "SEU_TOKEN_AQUI" # Veja o terceiro passo do README.md para obter esse Token.
+
+session = requests.Session()
+session.headers = SESSION_HEADERS
+session.cookies.set("__Secure-1PSID", token)
+session.cookies.set("__Secure-1PSIDTS", "<VALUE>")
+session.cookies.set("__Secure-1PSIDCC", "<VALUE>")
+
+
+bard = Bard(token=token, session=session)
+
+print(bard.get_answer(arg)['content'])
