@@ -1,2 +1,2 @@
-# lemu
-Emulador de Android para Linux.
+# kevin
+IA.
