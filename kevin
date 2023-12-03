@@ -1,4 +1,8 @@
 #!/bin/python3
+
+# Binário de desenvolvimento
+# Caso deseje kevin para uso pessoal, baixe nesse link: https://github.com/proxlu/kevin/releases/download/cli
+
 import sys
 
 # Pega toda entrada
