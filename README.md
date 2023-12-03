@@ -30,7 +30,7 @@ IA/AI.
 2. Tecle F12
 3. Navegue por: Applicativo → Cookies → copie o valor de `__Secure-1PSID`.
 
-4. cole o token no `config.ini` após `discord_token =`
+4. cole o token no `config.ini` após `bard_token =`
 
 ![bard_api](https://github.com/proxlu/kevin/assets/105125779/6e6f18cc-b5f1-44a1-a570-0d981eb4a3c1)
 
