@@ -38,4 +38,5 @@ IA/AI.
 
 3. Execute `python3 kevin.py` ou `./kevin.py` para iniciar o bot
 
-![image](https://github.com/proxlu/kevin/assets/105125779/953dc419-1e02-45d1-936f-e3f8575b82dd)
+![bard_api](https://github.com/proxlu/kevin/assets/105125779/6e6f18cc-b5f1-44a1-a570-0d981eb4a3c1)
+
