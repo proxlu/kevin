@@ -13,11 +13,11 @@ def remover_mencoes(message, texto):
       texto = texto.replace(f'<@{mencionado.id}>', '')
   return texto
 
-# carrega as chaves em config.ini
+# Carrega as chaves em config.ini
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-# Carregamento
+# Carregamento do Discord
 intents = discord.Intents.default()
 intents.messages = True  # Habilita a intenção de mensagens de guilda
 client = discord.Client(intents=intents)
@@ -57,7 +57,7 @@ async def on_message(message):
     else:
       saida_da_api = resposta_api['content']
 
-    # Recebe a mensagem do usuário
+    # Resposta para o usuário
     await splash.delete()
     while saida_da_api != '':
       await canal.send(saida_da_api[:2000])
