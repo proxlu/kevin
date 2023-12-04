@@ -1,9 +1,17 @@
 #!/bin/python3
 # -*- coding: utf-8 -*- 
+import re
 from bardapi.constants import SESSION_HEADERS
 from bardapi import Bard
 import requests
 import discord
+
+# Remover menção ao bot
+def remover_mencoes(message, texto):
+  for mencionado in message.mentions:
+    if mencionado.bot:
+      texto = texto.replace(f'<@{mencionado.id}>', '')
+  return texto
 
 # carrega as chaves em config.ini
 config = configparser.ConfigParser()
@@ -20,40 +28,39 @@ token = config['tokens']['bard_token']
 # Requisição dos cabeçalhos/cookies
 session = requests.Session()
 session.headers = SESSION_HEADERS
-session.cookies.set("__Secure-1PSID", token)
-session.cookies.set("__Secure-1PSIDTS", "<VALUE>")
-session.cookies.set("__Secure-1PSIDCC", "<VALUE>")
-# bard = Bard(token=token, session=session) # Descomente esse trecho para que o bot armazene histórico de chat
+session.cookies.set('__Secure-1PSID', token)
+session.cookies.set('__Secure-1PSIDTS', '<VALUE>')
+session.cookies.set('__Secure-1PSIDCC', '<VALUE>')
 
 # Bot
 @client.event
 async def on_message(message):
-	if message.author == client.user:
-		return
+  if message.author == client.user:
+    return
 
-	canal = message.channel
-	texto = message.clean_content
+  canal = message.channel
+  texto = remover_mencoes(message, message.content)  # Remove as menções de bots
 
-	# Verifica se o bot foi mencionado
-	bot_mention = f"<@{client.user.id}>"
-	if bot_mention in texto:
-		texto = texto.replace(bot_mention, "").strip()  # Remove a menção ao bot
+  # Estrutura principal
+  if texto:
 
-	# Estrutura principal
-	if texto.strip():
-		
-		# Splash de carregamento
-		splash = await canal.send(':hourglass:')
+    # Splash de carregamento
+    splash = await canal.send(':hourglass:')
 
-		# Solicita a api
-		bard = Bard(token=token, session=session) # Comente esse trecho para que o bot armazene histórico de chat
-		saida_da_api = bard.get_answer(texto)['content']
+    # Solicita a api
+    bard = Bard(token=token, session=session)
+    resposta_api = bard.get_answer(texto)
 
+    # Trata a resposta da API
+    if isinstance(resposta_api, str):
+      saida_da_api = resposta_api
+    else:
+      saida_da_api = resposta_api['content']
 
-		# Recebe a mensagem do usuário
-		await splash.delete()
-		while saida_da_api != '':
-			await canal.send(saida_da_api[:2000])
-			saida_da_api = saida_da_api[2000:]
+    # Recebe a mensagem do usuário
+    await splash.delete()
+    while saida_da_api != '':
+      await canal.send(saida_da_api[:2000])
+      saida_da_api = saida_da_api[2000:]
 
 client.run(config['tokens']['discord_token'])
