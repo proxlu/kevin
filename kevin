@@ -24,9 +24,10 @@ if arg:
   session.cookies.set('__Secure-1PSIDCC', '<VALUE>')
 
   bard = Bard(token=token, session=session)
+  text = bard.get_answer(arg)['content']
 
   print()
-  print(bard.get_answer(arg)['content'])
+  print(text)
   print()
 else:
   print()
