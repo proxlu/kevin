@@ -38,6 +38,7 @@ async def on_message(message):
       texto = texto.replace(f'<@{mencionado.id}>', '')
   canal = message.channel
   global channel_id
+  channel_id = ''
 
   # Estrutura principal
   if texto:
@@ -48,12 +49,13 @@ async def on_message(message):
     # Verifica se deve apagar os dados do chat
     if channel_id != canal.id:
       channel_id = canal.id
+      global bard
       bard = Bard(token=token, session=session)
 
     # Verifica se tem anexo de imagem na mensagem
     if message.attachments:
       anexo = message.attachments[0]
-      with open(anexo.filename, "rb") as file:
+      with open(anexo.filename, 'rb') as file:
         image = discord.Image(file)
         resposta_api = bard.ask_about_image(texto, image)
     else:
