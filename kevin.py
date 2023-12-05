@@ -1,25 +1,18 @@
 #!/bin/python3
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
+#
+# kevin.py - by:proxlu
 import re
 from bardapi.constants import SESSION_HEADERS
 from bardapi import Bard
 import requests
 import discord
+import asyncio
+import json
 
-# Remover menção ao bot
-def remover_mencoes(message, texto):
-  for mencionado in message.mentions:
-    if mencionado.bot:
-      texto = texto.replace(f'<@{mencionado.id}>', '')
-  return texto
-
-# Carrega as chaves em config.ini
-config = configparser.ConfigParser()
-config.read('config.ini')
-
-# Carregamento do Discord
+# Carregamento
 intents = discord.Intents.default()
-intents.messages = True  # Habilita a intenção de mensagens de guilda
+intents.messages = True
 client = discord.Client(intents=intents)
 
 # Token da sessão do Bard
@@ -32,14 +25,19 @@ session.cookies.set('__Secure-1PSID', token)
 session.cookies.set('__Secure-1PSIDTS', '<VALUE>')
 session.cookies.set('__Secure-1PSIDCC', '<VALUE>')
 
-# Bot
+# Bot (Token do Discord na ultima linha desse bloco)
 @client.event
 async def on_message(message):
   if message.author == client.user:
     return
 
+  # Cria as principais variáveis
+  texto = message.content
+  for mencionado in message.mentions:
+    if mencionado.bot:
+      texto = texto.replace(f'<@{mencionado.id}>', '')
   canal = message.channel
-  texto = remover_mencoes(message, message.content)  # Remove as menções de bots
+  global channel_id
 
   # Estrutura principal
   if texto:
@@ -47,20 +45,32 @@ async def on_message(message):
     # Splash de carregamento
     splash = await canal.send(':hourglass:')
 
-    # Solicita a api
-    bard = Bard(token=token, session=session)
-    resposta_api = bard.get_answer(texto)
+    # Verifica se deve apagar os dados do chat
+    if channel_id != canal.id:
+      channel_id = canal.id
+      bard = Bard(token=token, session=session)
+
+    # Verifica se tem anexo de imagem na mensagem
+    if message.attachments:
+      anexo = message.attachments[0]
+      with open(anexo.filename, "rb") as file:
+        image = discord.Image(file)
+        resposta_api = bard.ask_about_image(texto, image)
+    else:
+      resposta_api = bard.get_answer(texto)
 
     # Trata a resposta da API
-    if isinstance(resposta_api, str):
-      saida_da_api = resposta_api
-    else:
-      saida_da_api = resposta_api['content']
+    mensagem_api = resposta_api['content']
+    links_api = resposta_api['links']
 
-    # Resposta para o usuário
+    # Interpreta as imagens
+    for link in links_api:
+      mensagem_api = re.sub(r'\[Image of(.*?)\]', link, mensagem_api, count=1)
+
+    # Recebe a mensagem do usuário
     await splash.delete()
-    while saida_da_api != '':
-      await canal.send(saida_da_api[:2000])
-      saida_da_api = saida_da_api[2000:]
+    while mensagem_api != '':
+      await canal.send(mensagem_api[:2000])
+      mensagem_api = mensagem_api[2000:]
 
 client.run(config['tokens']['discord_token'])
