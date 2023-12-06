@@ -37,8 +37,6 @@ async def on_message(message):
     if mencionado.bot:
       texto = texto.replace(f'<@{mencionado.id}>', '')
   canal = message.channel
-  global channel_id
-  channel_id = ''
 
   # Estrutura principal
   if texto:
@@ -47,25 +45,29 @@ async def on_message(message):
     splash = await canal.send(':hourglass:')
 
     # Verifica se deve apagar os dados do chat
+    global channel_id
     if channel_id != canal.id:
       channel_id = canal.id
       global bard
       bard = Bard(token=token, session=session)
 
     # Checagem extra
-    anexo = message.attachments[0]
-    extensao = anexo.filename.split(".")[-1]
-    
-    # Verifica se tem anexo de imagem na mensagem
-    imagens_validas = ["jpg", "jpeg", "png", "webp"]
-    if message.attachments and extensao in imagens_validas:
-      nome_arquivo = f'.anexo.{anexo.filename}'
-      with open(nome_arquivo, 'wb') as file:
-        await anexo.save(file)
-      with open(nome_arquivo, "rb") as image_file:
-        image = image_file.read()
-      resposta_api = bard.ask_about_image(texto, image)
-      os.remove(nome_arquivo)
+    if message.attachments:
+      anexo = message.attachments[0]
+      extensao = anexo.filename.split('.')[-1]
+      imagens_validas = ['jpg', 'jpeg', 'png', 'webp']
+
+      # Verifica se tem anexo de imagem na mensagem
+      if extensao in imagens_validas:
+        nome_arquivo = f'.anexo.{anexo.filename}'
+        with open(nome_arquivo, 'wb') as file:
+          await anexo.save(file)
+        with open(nome_arquivo, 'rb') as image_file:
+          image = image_file.read()
+        resposta_api = bard.ask_about_image(texto, image)
+        os.remove(nome_arquivo)
+      else:
+        resposta_api = bard.get_answer(texto)
     else:
       resposta_api = bard.get_answer(texto)
 
