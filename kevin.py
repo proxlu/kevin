@@ -52,12 +52,20 @@ async def on_message(message):
       global bard
       bard = Bard(token=token, session=session)
 
+    # Checagem extra
+    anexo = message.attachments[0]
+    extensao = anexo.filename.split(".")[-1]
+    
     # Verifica se tem anexo de imagem na mensagem
-    if message.attachments:
-      anexo = message.attachments[0]
-      with open(anexo.filename, 'rb') as file:
-        image = discord.Image(file)
-        resposta_api = bard.ask_about_image(texto, image)
+    imagens_validas = ["jpg", "jpeg", "png", "webp"]
+    if message.attachments and extensao in imagens_validas:
+      nome_arquivo = f'.anexo.{anexo.filename}'
+      with open(nome_arquivo, 'wb') as file:
+        await anexo.save(file)
+      with open(nome_arquivo, "rb") as image_file:
+        image = image_file.read()
+      resposta_api = bard.ask_about_image(texto, image)
+      os.remove(nome_arquivo)
     else:
       resposta_api = bard.get_answer(texto)
 
