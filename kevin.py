@@ -10,14 +10,20 @@ import discord
 import asyncio
 import json
 
+# Opcional
+import configparser
+config = configparser.ConfigParser()
+config.read("config.ini")
+
 # Carregamento
 intents = discord.Intents.default()
 intents.messages = True
 client = discord.Client(intents=intents)
 channel_id = ''
 
-# Token da sessão do Bard
-token = config['tokens']['bard_token']
+# Armazena os tokens
+bot = config['tokens']['discord_token'] # Opcional
+token = config['tokens']['bard_token'] # Opcional
 
 # Requisição dos cabeçalhos/cookies
 session = requests.Session()
@@ -26,7 +32,7 @@ session.cookies.set('__Secure-1PSID', token)
 session.cookies.set('__Secure-1PSIDTS', '<VALUE>')
 session.cookies.set('__Secure-1PSIDCC', '<VALUE>')
 
-# Bot (Token do Discord na ultima linha desse bloco)
+# Bot
 @client.event
 async def on_message(message):
   if message.author == client.user:
@@ -86,4 +92,4 @@ async def on_message(message):
       await canal.send(mensagem_api[:2000])
       mensagem_api = mensagem_api[2000:]
 
-client.run(config['tokens']['discord_token'])
+client.run(bot)
