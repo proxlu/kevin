@@ -14,6 +14,7 @@ import json
 intents = discord.Intents.default()
 intents.messages = True
 client = discord.Client(intents=intents)
+channel_id = ''
 
 # Token da sessão do Bard
 token = config['tokens']['bard_token']
