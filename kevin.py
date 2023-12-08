@@ -85,7 +85,7 @@ async def on_message(message):
     # Interpreta as imagens
     for link in links_api:
       if re.search(r'\.(jpg|jpeg|png|webp)(?:[?#/].*)?$', link):
-        mensagem_api = re.sub(r'\[Image of(.*?)\]', link, mensagem_api, count=1, flags=re.UNICODE)
+        mensagem_api = re.sub(r'\[Image of([^\]]*?)\]', link, mensagem_api, count=1, flags=re.UNICODE)
 
     # Recebe a mensagem do usuário
     await splash.delete()
