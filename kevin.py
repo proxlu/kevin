@@ -18,7 +18,7 @@ import json
 # Opcional para não expor os tokens
 import configparser
 config = configparser.ConfigParser()
-config.read("config.ini")
+config.read('config.ini')
 
 # Carregamento
 intents = discord.Intents.default()
@@ -103,7 +103,10 @@ async def on_message(message):
     if 'bard' not in conteudo.casefold() and 'google ai' not in conteudo.casefold():
       mensagem_api = mensagem_api.replace('Bard', nome).replace('bard', nome).replace('BARD', nome)
       mensagem_api = mensagem_api.replace('Google AI', criador).replace('google ai', criador).replace('GOOGLE AI', criador)
-    
+
+    # Miscelâneas
+    mensagem_api = mensagem_api.replace('[Seu Nome]', client.user.display_name).replace('[Seu nome]', client.user.display_name).replace('[seu nome]', client.user.display_name).replace('[SEU NOME]', client.user.display_name)
+
     # Envia a resposta do usuário
     await splash.delete()
     while mensagem_api != '':
