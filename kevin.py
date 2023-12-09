@@ -81,12 +81,17 @@ async def on_message(message):
     # Trata a resposta da API
     mensagem_api = resposta_api['content']
     links_api = resposta_api['links']
-
+    links_mensagem = re.findall(r'\[http([^\]]*?)\]\(([^)]*?)\)', mensagem_api)
+    
     # Interpreta as imagens
     for link in links_api:
       if re.search(r'\.(jpg|jpeg|png|webp)(?:[?#/].*)?$', link):
         mensagem_api = re.sub(r'\[Image of([^\]]*?)\]', link, mensagem_api, count=1, flags=re.UNICODE)
-
+        
+    # Interpreta as urls
+    for link, parenteses in links_mensagem:
+      mensagem_api = mensagem_api.replace(f'[http{link}]({parenteses})', parenteses)
+    
     # Recebe a mensagem do usuário
     await splash.delete()
     while mensagem_api != '':
