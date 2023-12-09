@@ -45,7 +45,7 @@ async def on_message(message):
 
   # Cria as principais variáveis
   conteudo = message.content
-  texto = re.sub(nome, 'Bard', conteudo).sub(nome.lower(), 'bard', conteudo).sub(nome.upper(), 'bard', conteudo)
+  texto = conteudo.replace(nome, 'Bard').replace(nome.lower(), 'bard').sub(nome.upper(), 'BARD')
   for mencionado in message.mentions:
     if mencionado.bot:
       texto = texto.replace(f'<@{mencionado.id}>', '')
@@ -100,7 +100,7 @@ async def on_message(message):
       mensagem_api = mensagem_api.replace(f'[http{link}]({parenteses})', parenteses)
 
     # Substitui o nome e o criador
-    if 'bard' not in conteudo.casefold() and 'google ai' not in conteudo.casefold() or nome.casefold() in conteudo.casefold():
+    if 'bard' not in conteudo.casefold() and 'google ai' not in conteudo.casefold():
       mensagem_api = mensagem_api.replace('Bard', nome).replace('bard', nome).replace('BARD', nome)
       mensagem_api = mensagem_api.replace('Google AI', criador).replace('google ai', criador).replace('GOOGLE AI', criador)
     
