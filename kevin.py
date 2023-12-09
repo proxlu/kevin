@@ -2,6 +2,11 @@
 # -*- coding: utf-8 -*-
 #
 # kevin.py - by:proxlu
+
+# Configurações
+nome = 'kevin' # Nome do bot
+criador = 'proxlu' # Criador do bot
+
 import re
 from bardapi.constants import SESSION_HEADERS
 from bardapi import Bard
@@ -10,7 +15,7 @@ import discord
 import asyncio
 import json
 
-# Opcional
+# Opcional para não expor os tokens
 import configparser
 config = configparser.ConfigParser()
 config.read("config.ini")
@@ -22,8 +27,8 @@ client = discord.Client(intents=intents)
 channel_id = ''
 
 # Armazena os tokens
-bot = config['tokens']['discord_token'] # Opcional
-token = config['tokens']['bard_token'] # Opcional
+bot = config['tokens']['discord_token'] # Opcional para não expor o token
+token = config['tokens']['bard_token'] # Opcional para não expor o token
 
 # Requisição dos cabeçalhos/cookies
 session = requests.Session()
@@ -39,7 +44,8 @@ async def on_message(message):
     return
 
   # Cria as principais variáveis
-  texto = message.content
+  conteudo = message.content
+  texto = re.sub(nome, 'Bard', conteudo).sub(nome.lower(), 'bard', conteudo).sub(nome.upper(), 'bard', conteudo)
   for mencionado in message.mentions:
     if mencionado.bot:
       texto = texto.replace(f'<@{mencionado.id}>', '')
@@ -91,6 +97,11 @@ async def on_message(message):
     # Interpreta as urls
     for link, parenteses in links_mensagem:
       mensagem_api = mensagem_api.replace(f'[http{link}]({parenteses})', parenteses)
+
+    # Substitui o nome e o criador
+    if 'bard' not in conteudo.casefold() and 'google ai' not in conteudo.casefold() or nome.casefold() in conteudo.casefold():
+      mensagem_api = mensagem_api.replace('Bard', nome).replace('bard', nome).replace('BARD', nome)
+      mensagem_api = mensagem_api.replace('Google AI', criador).replace('google ai', criador).replace('GOOGLE AI', criador)
     
     # Recebe a mensagem do usuário
     await splash.delete()
