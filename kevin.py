@@ -104,9 +104,6 @@ async def on_message(message):
       mensagem_api = mensagem_api.replace('Bard', nome).replace('bard', nome).replace('BARD', nome)
       mensagem_api = mensagem_api.replace('Google AI', criador).replace('google ai', criador).replace('GOOGLE AI', criador)
 
-    # Miscelâneas
-    mensagem_api = mensagem_api.replace('[Seu Nome]', client.user.display_name).replace('[Seu nome]', client.user.display_name).replace('[seu nome]', client.user.display_name).replace('[SEU NOME]', client.user.display_name).replace('[Tu Nombre]', client.user.display_name).replace('[Tu nombre]', client.user.display_name).replace('[tu nombre]', client.user.display_name).replace('[TU NOMBRE]', client.user.display_name)
-
     # Envia a resposta do usuário
     await splash.delete()
     while mensagem_api != '':
