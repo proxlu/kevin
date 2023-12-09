@@ -81,10 +81,11 @@ async def on_message(message):
         os.remove(nome_arquivo)
       else:
         resposta_api = bard.get_answer(texto)
+
     else:
       resposta_api = bard.get_answer(texto)
 
-    # Trata a resposta da API
+    # Trata a resposta da api
     mensagem_api = resposta_api['content']
     links_api = resposta_api['links']
     links_mensagem = re.findall(r'\[http([^\]]*?)\]\(([^)]*?)\)', mensagem_api)
@@ -103,7 +104,7 @@ async def on_message(message):
       mensagem_api = mensagem_api.replace('Bard', nome).replace('bard', nome).replace('BARD', nome)
       mensagem_api = mensagem_api.replace('Google AI', criador).replace('google ai', criador).replace('GOOGLE AI', criador)
     
-    # Recebe a mensagem do usuário
+    # Envia a resposta do usuário
     await splash.delete()
     while mensagem_api != '':
       await canal.send(mensagem_api[:2000])
