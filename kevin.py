@@ -14,6 +14,7 @@ import requests
 import discord
 import asyncio
 import json
+import time
 
 # Opcional para não expor os tokens
 import configparser
@@ -67,12 +68,13 @@ async def on_message(message):
     # Checagem extra
     if message.attachments:
       anexo = message.attachments[0]
+      timestamp = time.time()
       extensao = anexo.filename.split('.')[-1]
       imagens_validas = ['jpg', 'jpeg', 'png', 'webp', 'JPG', 'JPEG', 'PNG', 'WEBP']
 
       # Verifica se tem anexo de imagem na mensagem
       if extensao in imagens_validas:
-        nome_arquivo = f'.anexo.{anexo.filename}'
+        nome_arquivo = f'.{timestamp}.{anexo.filename}'
         with open(nome_arquivo, 'wb') as file:
           await anexo.save(file)
         with open(nome_arquivo, 'rb') as image_file:
