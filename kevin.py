@@ -68,7 +68,7 @@ async def on_message(message):
     if message.attachments:
       anexo = message.attachments[0]
       extensao = anexo.filename.split('.')[-1]
-      imagens_validas = ['jpg', 'jpeg', 'png', 'webp']
+      imagens_validas = ['jpg', 'jpeg', 'png', 'webp', 'JPG', 'JPEG', 'PNG', 'WEBP']
 
       # Verifica se tem anexo de imagem na mensagem
       if extensao in imagens_validas:
@@ -92,7 +92,7 @@ async def on_message(message):
     
     # Interpreta as imagens
     for link in links_api:
-      if re.search(r'\.(jpg|jpeg|png|webp)(?:[?#/].*)?$', link):
+      if re.search(r'\.(jpg|jpeg|png|webp|JPG|JPEG|PNG|WEBP)(?:[?#/].*)?$', link):
         mensagem_api = re.sub(r'\[Image of([^\]]*?)\]', link, mensagem_api, count=1, flags=re.UNICODE)
         
     # Interpreta as urls
