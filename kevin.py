@@ -95,7 +95,7 @@ async def on_message(message):
     # Interpreta as imagens
     for link in links_api:
       if re.search(r'\.(jpg|jpeg|png|webp|JPG|JPEG|PNG|WEBP)(?:[?#/].*)?$', link):
-        mensagem_api = re.sub(r'\[Image of([^\]]*?)\]', link, mensagem_api, count=1, flags=re.UNICODE)
+        mensagem_api = re.sub(r'\[Image(?:m|n)([^\]]*?)\]', link, mensagem_api, count=1, flags=re.UNICODE)
         
     # Interpreta as urls
     for link, parenteses in links_mensagem:
