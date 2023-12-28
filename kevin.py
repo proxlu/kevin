@@ -91,6 +91,8 @@ async def on_message(message):
     mensagem_api = resposta_api['content']
     links_api = resposta_api['links']
     links_mensagem = re.findall(r'\[http([^\]]*?)\]\(([^)]*?)\)', mensagem_api)
+    if not links_api:
+      links_api = ':frame_photo:'
     
     # Interpreta as imagens
     for link in links_api:
