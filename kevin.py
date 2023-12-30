@@ -92,13 +92,18 @@ async def on_message(message):
     links_api = resposta_api['links']
     links_mensagem = re.findall(r'\[http([^\]]*?)\]\(([^)]*?)\)', mensagem_api)
     if not links_api:
-      links_api = ':frame_photo:'
+      links_api = [':frame_photo:']
     
     # Interpreta as imagens
     for link in links_api:
       if re.search(r'\.(jpg|jpeg|png|webp|JPG|JPEG|PNG|WEBP)(?:[?#/].*)?$', link):
         mensagem_api = re.sub(r'\[Image([^\]]*?)\]', link, mensagem_api, count=1, flags=re.UNICODE)
-        
+      else:
+        mensagem_api = re.sub(r'\[Video([^\]]*?)\]', link, mensagem_api, count=1, flags=re.UNICODE)
+        youtube_content = True
+    if youtube_content:
+      mensagem_api = re.sub(r'http://googleusercontent\.com/youtube_content/([^\]]*?)$', '', mensagem_api, flags=re.UNICODE)
+    
     # Interpreta as urls
     for link, parenteses in links_mensagem:
       mensagem_api = mensagem_api.replace(f'[http{link}]({parenteses})', parenteses)
