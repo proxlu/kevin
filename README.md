@@ -32,7 +32,7 @@ IA para utilizar no terminal e também no Discord.
 
 4. cole o token no `config.ini` após `bard_token =`
 
-![image](https://github.com/proxlu/kevin/assets/105125779/bbe573f3-a1ff-4e5d-b477-7bcb8e686af7)
+![bard_api](https://github.com/proxlu/kevin/assets/105125779/647b676b-b165-4e58-be7a-dd5fc8c1a14a)
 
 ## Passo 3: Executar o bot
 
