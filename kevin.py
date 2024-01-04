@@ -107,7 +107,7 @@ async def on_message(message):
       if re.search(r'\.(jpg|jpeg|png|webp|JPG|JPEG|PNG|WEBP)(?:[?#/].*)?$', link):
         mensagem_api = re.sub(r'\[Image([^\]]*?)\]', link, mensagem_api, count=1, flags=re.UNICODE)
       else:
-        mensagem_api = re.sub(r'\[Video([^\]]*?)\]', link, mensagem_api, count=1, flags=re.UNICODE)
+        mensagem_api = re.sub(r'\[V(i|í)deo([^\]]*?)\]', link, mensagem_api, count=1, flags=re.UNICODE)
         youtube_content = True
     if youtube_content:
       mensagem_api = re.sub(r'http://googleusercontent\.com/youtube_content/([^\]]*?)$', '', mensagem_api, flags=re.UNICODE)
