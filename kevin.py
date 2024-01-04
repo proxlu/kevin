@@ -1,6 +1,6 @@
 #!/bin/python3
 # -*- coding: utf-8 -*-
-# 
+#
 # kevin.py - by:proxlu
 
 # Configurações
