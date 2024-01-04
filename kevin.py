@@ -24,6 +24,7 @@ config.read('config.ini')
 # Carregamento
 intents = discord.Intents.default()
 intents.messages = True
+# intents.message_content = True # Permite o bot responder em servidores sem que seja mencionado
 client = discord.Client(intents=intents)
 channel_id = ''
 
