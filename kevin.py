@@ -90,13 +90,14 @@ async def on_message(message):
       else:
         resposta_api = bard.get_answer(texto)
 
-    except:
+    except Exception as e:
+      print(f"E: {e}")
       await splash.delete()
       await canal.send('404')
       
       # Atualização do token durante execução
       config.read('config.ini')
-      token = config['tokens']['bard_token']
+      token1 = config['tokens']['bard_token']
       
       return
       
