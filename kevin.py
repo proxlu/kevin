@@ -16,7 +16,7 @@ import asyncio
 import json
 import time
 
-# Opcional para não expor os tokens
+# Opcional para não expor os tokens e para atualização do token durante execução
 import configparser
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -93,6 +93,11 @@ async def on_message(message):
     except:
       await splash.delete()
       await canal.send('404')
+      
+      # Atualização do token durante execução
+      config.read('config.ini')
+      token = config['tokens']['bard_token']
+      
       return
       
     # Trata a resposta da api
