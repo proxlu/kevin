@@ -13,7 +13,6 @@ from bardapi import Bard
 import requests
 import discord
 import asyncio
-import json
 import time
 
 # Opcional para não expor os tokens e para atualização do token durante execução
