@@ -29,10 +29,16 @@ session.cookies.set('__Secure-1PSIDCC', '<VALUE>')
 if arg:
   bard = Bard(token=token, session=session)
   text = bard.get_answer(arg)['content']
+  url = bard.get_answer(arg)['images']
 
   print()
   print(text)
   print()
+
+  if url:
+    print(' Image links:', url)
+    print()
+
 else:
   # print()
   # print('Olá, Sou uma IA de linha de comando e estou aqui para lhe ajudar, como posso lhe ajudar? Qualquer dúvida basta digitar: kevin A_SUA_PERGUNTA')
