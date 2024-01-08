@@ -15,7 +15,7 @@ import discord
 import asyncio
 import time
 
-# Opcional para não expor os tokens e para atualização do token durante execução
+# Opcional para não expor os tokens
 import configparser
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -93,11 +93,6 @@ async def on_message(message):
       print(f"E: {e}")
       await splash.delete()
       await canal.send('404')
-      
-      # Atualização do token durante execução
-      config.read('config.ini')
-      token1 = config['tokens']['bard_token']
-      
       return
       
     # Trata a resposta da api
